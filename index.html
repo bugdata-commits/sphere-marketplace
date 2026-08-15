@@ -3,497 +3,86 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Trade Sphere Marketplace</title>
-<meta name="description" content="Trade Sphere Marketplace connects sellers, service providers, and investors across Africa — with secure escrow, pan-African logistics, and real-time analytics." />
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23d4a017' stroke-width='2'/%3E%3Ccircle cx='16' cy='5' r='2.4' fill='%23d4a017'/%3E%3C/svg%3E" />
+<title>Trade Sphere Marketplace — Africa, in one trusted place</title>
+<meta name="description" content="Trade Sphere Marketplace connects verified sellers, service providers, and investors across Africa with trusted payments and pan-African logistics." />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23e1b75a' stroke-width='2'/%3E%3Ccircle cx='16' cy='5' r='2.4' fill='%23e1b75a'/%3E%3C/svg%3E" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="./assets/style.css">
 </head>
 <body>
 <div class="bg-field" aria-hidden="true"></div>
+<div class="demo-banner" id="config-banner" style="display:none;">Backend connection is not configured yet. Add your Supabase URL and anon key in <code>assets/app.js</code>.</div>
 
-<div class="demo-banner" id="config-banner" style="display:none;">⚠️ <b>Backend not connected yet</b> — add your Supabase URL and anon key in <code>assets/app.js</code> to go live. See <code>backend/README.md</code>.</div>
-
-<header>
-  <div class="nav-inner">
-    <a href="#top" class="logo">
-      <img class="logo-mark" src="./assets/logo-small.png" alt="Trade Sphere Marketplace">
-      <span>Trade Sphere Marketplace</span>
-    </a>
-
-    <form class="nav-search glass" role="search" onsubmit="return false;">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5" stroke-linecap="round"/></svg>
-      <input type="text" placeholder="Search products, services, or sellers…" aria-label="Search the marketplace" />
-    </form>
-
-    <nav class="primary-links" aria-label="Primary">
-      <a href="#marketplace">Marketplace</a>
-      <a href="#pricing">Invest</a>
-      <a href="#advertise">Advertise</a>
-      <a href="./affiliate.html">Affiliates</a>
-    </nav>
-
-    <div class="nav-actions">
-      <a href="#signin" class="btn btn-ghost">Sign in</a>
-      <a href="#" class="btn btn-gold" id="open-signup">Start Selling</a>
-      <button class="search-toggle" id="search-toggle" aria-label="Toggle search" aria-expanded="false" aria-controls="mobile-search">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5" stroke-linecap="round"/></svg>
-      </button>
-      <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-menu">
-        <span></span>
-      </button>
-    </div>
+<header class="site-header">
+  <div class="nav-inner wrap">
+    <a href="#top" class="logo"><img class="logo-mark" src="./assets/logo-small.png" alt="Trade Sphere Marketplace"><span>Trade Sphere <b>Marketplace</b></span></a>
+    <form class="nav-search glass" role="search" onsubmit="return false;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5" stroke-linecap="round"/></svg><input type="text" placeholder="Search products, services, or sellers…" aria-label="Search the marketplace" /></form>
+    <nav class="primary-links" aria-label="Primary"><a href="#marketplace">Marketplace</a><a href="#pricing">Invest</a><a href="#advertise">Advertise</a><a href="./affiliate.html">Affiliates</a></nav>
+    <div class="nav-actions"><a href="#signin" class="btn btn-ghost">Sign in</a><a href="#" class="btn btn-gold" id="open-signup">Start Selling</a><button class="search-toggle" id="search-toggle" aria-label="Toggle search" aria-expanded="false" aria-controls="mobile-search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5" stroke-linecap="round"/></svg></button><button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-menu"><span></span></button></div>
   </div>
-  <form class="mobile-search glass" id="mobile-search" role="search" onsubmit="return false;">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5" stroke-linecap="round"/></svg>
-    <input type="text" placeholder="Search products, services, or sellers…" aria-label="Search the marketplace" />
-  </form>
+  <form class="mobile-search glass wrap" id="mobile-search" role="search" onsubmit="return false;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5" stroke-linecap="round"/></svg><input type="text" placeholder="Search products, services, or sellers…" aria-label="Search the marketplace" /></form>
 </header>
-
-<div class="mobile-menu" id="mobile-menu">
-  <div class="mobile-menu-inner">
-    <a class="mlink" href="#marketplace">Marketplace</a>
-    <a class="mlink" href="#pricing">Invest</a>
-    <a class="mlink" href="#advertise">Advertise</a>
-    <a class="mlink" href="./affiliate.html">Affiliates</a>
-    <div class="mobile-ctas">
-      <a href="#signin" class="btn btn-ghost btn-block">Sign in</a>
-      <a href="#" class="btn btn-gold btn-block" id="open-signup-mobile">Start Selling</a>
-    </div>
-  </div>
-</div>
+<div class="mobile-menu" id="mobile-menu"><div class="mobile-menu-inner"><a class="mlink" href="#marketplace">Marketplace</a><a class="mlink" href="#pricing">Invest</a><a class="mlink" href="#advertise">Advertise</a><a class="mlink" href="./affiliate.html">Affiliates</a><div class="mobile-ctas"><a href="#signin" class="btn btn-ghost btn-block">Sign in</a><a href="#" class="btn btn-gold btn-block" id="open-signup-mobile">Start Selling</a></div></div></div>
 
 <main id="top">
-
-  <!-- HERO -->
   <section class="hero">
-    <div class="orbit-field" aria-hidden="true">
-      <div class="ring r1"></div>
-      <div class="ring r2"></div>
-      <div class="ring r3"></div>
-      <div class="node" style="top:50%; left:calc(50% + 320px);"></div>
-      <div class="node" style="top:calc(50% - 430px); left:50%;"></div>
-      <div class="node" style="top:calc(50% + 210px); left:calc(50% - 210px);"></div>
-    </div>
-
+    <div class="hero-glow"></div><div class="orbit-field" aria-hidden="true"><div class="ring r1"></div><div class="ring r2"></div><div class="ring r3"></div><div class="node n1"></div><div class="node n2"></div><div class="node n3"></div></div>
     <div class="wrap hero-inner">
-      <div class="eyebrow" data-reveal><span class="pulse"></span> Now live across 14 African markets</div>
-      <h1 class="hero-title" data-reveal>Trade <span class="accent">Sphere Marketplace</span></h1>
-      <p class="hero-sub" data-reveal>Buy. Sell. Connect. Grow.</p>
-
-      <div class="hero-ctas" data-reveal>
-        <a href="#" class="btn btn-gold open-signup">Start Selling</a>
-        <a href="#marketplace" class="btn btn-ghost glass">Explore Marketplace</a>
-      </div>
+      <div class="hero-kicker" data-reveal><span class="live-dot"></span> Africa’s trusted trade network</div>
+      <h1 class="hero-title" data-reveal>Find what moves<br><span class="accent">Africa forward.</span></h1>
+      <p class="hero-sub" data-reveal>One premium marketplace for products, services, and opportunities — backed by verified sellers and secure trade.</p>
+      <form class="hero-search" id="hero-search" role="search" onsubmit="return false;" data-reveal><div class="search-icon"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5" stroke-linecap="round"/></svg></div><input id="hero-search-input" type="search" placeholder="What are you looking for today?" aria-label="Search products, services, or sellers"><select aria-label="Search category"><option>All categories</option><option>Products</option><option>Services</option><option>Businesses</option></select><button class="btn btn-gold" type="submit">Search</button></form>
+      <div class="search-suggestions" data-reveal><span>Popular:</span><button type="button" data-query="solar power">Solar power</button><button type="button" data-query="handmade fashion">Handmade fashion</button><button type="button" data-query="business services">Business services</button><button type="button" data-query="agri exports">Agri exports</button></div>
+      <div class="hero-proof" data-reveal><div><strong>14</strong><span>markets connected</span></div><div><strong>4.9<span class="star">★</span></strong><span>seller experience</span></div><div><strong>100%</strong><span>secure checkout</span></div></div>
     </div>
   </section>
 
-  <!-- CATEGORIES -->
-  <section id="marketplace">
-    <div class="wrap">
-      <div class="section-head" data-reveal>
-        <div class="section-label">Browse</div>
-        <h2 class="section-title">Every category, one marketplace</h2>
-        <p class="section-desc">From software studios in Lagos to agri-exporters in Nairobi — find and reach the businesses shaping Africa's economy.</p>
-      </div>
+  <section class="trust-ribbon"><div class="wrap ribbon-inner"><span class="ribbon-intro">Trade with confidence</span><div><svg viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 5 3.6 8 8 9 4.4-1 8-4 8-9V6l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg><span><b>Verified sellers</b> identities reviewed</span></div><div><svg viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="10" rx="1.5"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg><span><b>Protected payments</b> escrow-backed</span></div><div><svg viewBox="0 0 24 24"><path d="M3 6h12v11H3zM15 10h3l3 3v4h-6z"/><circle cx="7" cy="19" r="1.5"/><circle cx="18" cy="19" r="1.5"/></svg><span><b>Pan-African delivery</b> track every order</span></div></div></section>
 
-      <div class="cat-grid" data-stagger>
-        <a href="#" class="cat-card glass" data-reveal style="--i:0">
-          <div class="cat-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 3 4 8l5 5M15 3l5 5-5 5M13 21 11 3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-          <h3>Tech &amp; Software</h3>
-          <p>Apps, platforms &amp; digital tools</p>
-        </a>
-        <a href="#" class="cat-card glass" data-reveal style="--i:1">
-          <div class="cat-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 3h12l1.5 4.5-1.5 1.5v12H6v-12L4.5 7.5 6 3Z" stroke-linejoin="round"/><path d="M9 3s0 3 3 3 3-3 3-3" stroke-linecap="round"/></svg></div>
-          <h3>Fashion &amp; Crafts</h3>
-          <p>Apparel, textiles &amp; handmade goods</p>
-        </a>
-        <a href="#" class="cat-card glass" data-reveal style="--i:2">
-          <div class="cat-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3c-3 3-5 6-5 9a5 5 0 0 0 10 0c0-3-2-6-5-9Z" stroke-linejoin="round"/><path d="M12 21v-4" stroke-linecap="round"/></svg></div>
-          <h3>Agriculture</h3>
-          <p>Produce, exports &amp; agri-tech</p>
-        </a>
-        <a href="#" class="cat-card glass" data-reveal style="--i:3">
-          <div class="cat-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="9" width="13" height="8" rx="1.2"/><path d="M15 11h3.5L21 14.5V17h-6z" stroke-linejoin="round"/><circle cx="6.5" cy="19" r="1.6"/><circle cx="17" cy="19" r="1.6"/></svg></div>
-          <h3>Logistics</h3>
-          <p>Freight, delivery &amp; fulfillment</p>
-        </a>
-        <a href="#" class="cat-card glass" data-reveal style="--i:4">
-          <div class="cat-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="3.4"/><path d="M5 21c0-4 3-6.5 7-6.5S19 17 19 21" stroke-linecap="round"/></svg></div>
-          <h3>Consulting</h3>
-          <p>Strategy, legal &amp; advisory</p>
-        </a>
-        <a href="#" class="cat-card glass" data-reveal style="--i:5">
-          <div class="cat-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 17 9 9l4 4 8-10" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 3h6v6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-          <h3>Investment</h3>
-          <p>Funding rounds &amp; capital partners</p>
-        </a>
-      </div>
-    </div>
-  </section>
+  <section id="marketplace" class="section-space"><div class="wrap"><div class="section-head split" data-reveal><div><div class="section-label">Explore the sphere</div><h2 class="section-title">A better way to <span class="accent">discover</span>.</h2></div><a href="#marketplace" class="text-link">View all categories <span>→</span></a></div><div class="cat-grid" data-stagger>
+    <a href="#" class="cat-card cat-featured" data-reveal style="--i:0"><div class="cat-art art-tech"><span>01</span><svg viewBox="0 0 24 24"><path d="m9 3-5 5 5 5M15 3l5 5-5 5M13 21 11 3"/></svg></div><div class="cat-copy"><h3>Tech &amp; Software</h3><p>Apps, platforms &amp; digital tools</p><span class="cat-count">2,480+ listings</span></div></a>
+    <a href="#" class="cat-card" data-reveal style="--i:1"><div class="cat-icon"><svg viewBox="0 0 24 24"><path d="M6 3h12l1.5 4.5-1.5 1.5v12H6v-12L4.5 7.5 6 3Z"/><path d="M9 3s0 3 3 3 3-3 3-3"/></svg></div><h3>Fashion &amp; Crafts</h3><p>Apparel, textiles &amp; handmade goods</p><span class="cat-count">1,920+ listings</span></a>
+    <a href="#" class="cat-card" data-reveal style="--i:2"><div class="cat-icon"><svg viewBox="0 0 24 24"><path d="M12 3c-3 3-5 6-5 9a5 5 0 0 0 10 0c0-3-2-6-5-9Z"/><path d="M12 21v-4"/></svg></div><h3>Agriculture</h3><p>Produce, exports &amp; agri-tech</p><span class="cat-count">1,340+ listings</span></a>
+    <a href="#" class="cat-card" data-reveal style="--i:3"><div class="cat-icon"><svg viewBox="0 0 24 24"><path d="M2 12c0-1 3-9 10-9s10 8 10 9-3 9-10 9-10-8-10-9Z"/><circle cx="12" cy="12" r="2.5"/></svg></div><h3>Business Services</h3><p>Strategy, legal &amp; advisory</p><span class="cat-count">860+ listings</span></a>
+    <a href="#" class="cat-card" data-reveal style="--i:4"><div class="cat-icon"><svg viewBox="0 0 24 24"><path d="M3 17 9 9l4 4 8-10"/><path d="M15 3h6v6"/></svg></div><h3>Investment</h3><p>Funding rounds &amp; capital partners</p><span class="cat-count">320+ opportunities</span></a>
+    <a href="#" class="cat-card" data-reveal style="--i:5"><div class="cat-icon"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H8l-4 4V5Z"/></svg></div><h3>Logistics</h3><p>Freight, delivery &amp; fulfillment</p><span class="cat-count">540+ providers</span></a>
+  </div></div></section>
 
-  <!-- FEATURES -->
-  <section id="features">
-    <div class="wrap">
-      <div class="section-head" data-reveal>
-        <div class="section-label">Platform</div>
-        <h2 class="section-title">Built for how you actually sell</h2>
-        <p class="section-desc">Every tool a growing business needs, without twelve different logins.</p>
-      </div>
+  <section class="section-space section-dark"><div class="wrap"><div class="section-head split" data-reveal><div><div class="section-label">Trending now</div><h2 class="section-title">What Africa is <span class="accent">buying.</span></h2></div><div class="rail-tabs"><button class="active">Popular today</button><button>New arrivals</button><button>Best rated</button></div></div><div class="product-grid" data-stagger>
+    <article class="product-card" data-reveal style="--i:0"><div class="product-image product-solar"><span class="product-tag">Trending</span><button class="heart" aria-label="Save product">♡</button><div class="product-symbol">☼</div></div><div class="product-body"><div class="product-rating"><span>★★★★★</span> <b>4.9</b> (28)</div><h3>Solar Home Power Kit 1.2kW</h3><div class="seller-line"><span class="seller-avatar">SK</span><span>SunKora Energy</span><em>✓ Verified</em></div><div class="product-footer"><strong>$480</strong><span>From Nairobi · Delivery available</span></div></div></article>
+    <article class="product-card" data-reveal style="--i:1"><div class="product-image product-fashion"><span class="product-tag gold">Editor's pick</span><button class="heart" aria-label="Save product">♡</button><div class="product-symbol">✦</div></div><div class="product-body"><div class="product-rating"><span>★★★★★</span> <b>4.8</b> (41)</div><h3>Handwoven Kente Statement Jacket</h3><div class="seller-line"><span class="seller-avatar terracotta">AO</span><span>Atelier Okafor</span><em>✓ Verified</em></div><div class="product-footer"><strong>$165</strong><span>From Accra · Ships worldwide</span></div></div></article>
+    <article class="product-card" data-reveal style="--i:2"><div class="product-image product-beans"><span class="product-tag">Top rated</span><button class="heart" aria-label="Save product">♡</button><div class="product-symbol">◌</div></div><div class="product-body"><div class="product-rating"><span>★★★★★</span> <b>5.0</b> (19)</div><h3>Single Origin Arabica Coffee</h3><div class="seller-line"><span class="seller-avatar green">NW</span><span>Nyota Coffee Co.</span><em>✓ Verified</em></div><div class="product-footer"><strong>$24</strong><span>From Nairobi · Secure delivery</span></div></div></article>
+    <article class="product-card" data-reveal style="--i:3"><div class="product-image product-digital"><span class="product-tag purple">Fast delivery</span><button class="heart" aria-label="Save product">♡</button><div class="product-symbol">⌘</div></div><div class="product-body"><div class="product-rating"><span>★★★★★</span> <b>4.9</b> (12)</div><h3>Retail Analytics Starter Kit</h3><div class="seller-line"><span class="seller-avatar blue">TM</span><span>Mokoena Digital</span><em>✓ Verified</em></div><div class="product-footer"><strong>$79</strong><span>Digital delivery · Instant access</span></div></div></article>
+  </div></div></section>
 
-      <div class="feat-grid" data-stagger>
-        <div class="feat-card glass" data-reveal style="--i:0">
-          <div class="feat-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 20V10M12 20V4M20 20v-7" stroke-linecap="round"/></svg></div>
-          <h3>Analytics Dashboard</h3>
-          <p>Track sales, traffic, and buyer behavior in one live view — no spreadsheets required.</p>
-        </div>
-        <div class="feat-card glass" data-reveal style="--i:1">
-          <div class="feat-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v3M12 18v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M3 12h3M18 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/><circle cx="12" cy="12" r="3.5"/></svg></div>
-          <h3>AI Recommendations</h3>
-          <p>Smart matching surfaces your listings to the buyers most likely to convert.</p>
-        </div>
-        <div class="feat-card glass" data-reveal style="--i:2">
-          <div class="feat-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3 4 6v6c0 5 3.6 8 8 9 4.4-1 8-4 8-9V6l-8-3Z" stroke-linejoin="round"/><path d="m9 12 2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-          <h3>Secure Payments</h3>
-          <p>Escrow-backed checkout holds funds until delivery is confirmed on both sides.</p>
-        </div>
-        <div class="feat-card glass" data-reveal style="--i:3">
-          <div class="feat-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2 14.5 8.5 21 9l-5 4.4 1.6 6.6L12 16.8 6.4 20l1.6-6.6L3 9l6.5-.5L12 2Z" stroke-linejoin="round"/></svg></div>
-          <h3>Promoted Listings</h3>
-          <p>Boost visibility in search and category pages with pay-as-you-go promotion.</p>
-        </div>
-        <div class="feat-card glass" data-reveal style="--i:4">
-          <div class="feat-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 12c0-1 3-9 10-9s10 8 10 9-3 9-10 9-10-8-10-9Z" stroke-linejoin="round"/><circle cx="12" cy="12" r="2.6"/></svg></div>
-          <h3>Pan-African Logistics</h3>
-          <p>Integrated carrier network for cross-border shipping and customs handling.</p>
-        </div>
-        <div class="feat-card glass" data-reveal style="--i:5">
-          <div class="feat-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h16v11H8l-4 4V5Z" stroke-linejoin="round"/></svg></div>
-          <h3>Business Messaging</h3>
-          <p>Negotiate, quote, and close deals directly with buyers — all in one thread.</p>
-        </div>
-      </div>
-    </div>
-  </section>
+  <section class="section-space"><div class="wrap feature-wrap"><div class="feature-intro" data-reveal><div class="section-label">The Sphere standard</div><h2 class="section-title">Trust is not a promise.<br><span class="accent">It is designed in.</span></h2><p class="section-desc">Every interaction is built to make cross-border trade feel simple, transparent, and human.</p><a href="#start-selling" class="btn btn-gold">Join the network</a></div><div class="feature-stack" data-stagger><div class="feature-row glass" data-reveal style="--i:0"><span class="feature-no">01</span><div><h3>Identity-led commerce</h3><p>Verified seller profiles, clear response signals, and real buyer feedback make every decision easier.</p></div><span class="feature-arrow">↗</span></div><div class="feature-row glass" data-reveal style="--i:1"><span class="feature-no">02</span><div><h3>Protection at checkout</h3><p>Payments are held securely until both sides have what they agreed to — with support when it matters.</p></div><span class="feature-arrow">↗</span></div><div class="feature-row glass" data-reveal style="--i:2"><span class="feature-no">03</span><div><h3>Commerce without borders</h3><p>Discover businesses across the continent and move goods with logistics designed for Africa.</p></div><span class="feature-arrow">↗</span></div></div></div></section>
 
-  <!-- SOCIAL PROOF -->
-  <section id="proof">
-    <div class="wrap">
-      <div class="section-head" data-reveal>
-        <div class="section-label">Trusted by sellers</div>
-        <h2 class="section-title">Growing across the continent</h2>
-      </div>
+  <section id="proof" class="section-space proof-section"><div class="wrap"><div class="section-head" data-reveal><div class="section-label">From the community</div><h2 class="section-title">Built for people who <span class="accent">move.</span></h2></div><div class="test-grid" data-stagger><div class="test-card glass" data-reveal style="--i:0"><div class="quote-mark">“</div><p class="test-quote">Sphere's escrow gave my export buyers confidence to pay upfront. Our order volume doubled in four months.</p><div class="test-person"><div class="avatar">AO</div><div><b>Amara Okafor</b><span>Textiles exporter · Lagos</span></div></div></div><div class="test-card glass featured-test" data-reveal style="--i:1"><div class="quote-mark">“</div><p class="test-quote">The AI recommendations put our software listing in front of buyers we'd never have reached on our own.</p><div class="test-person"><div class="avatar amber">TM</div><div><b>Themba Mokoena</b><span>Founder, cloud tools studio · Johannesburg</span></div></div></div><div class="test-card glass" data-reveal style="--i:2"><div class="quote-mark">“</div><p class="test-quote">Pan-African logistics meant we could finally ship produce to three neighboring countries without three separate brokers.</p><div class="test-person"><div class="avatar teal">NW</div><div><b>Naledi Wanjiru</b><span>Agri-exports lead · Nairobi</span></div></div></div></div></div></section>
 
-      <div class="test-grid" data-stagger>
-        <div class="test-card glass" data-reveal style="--i:0">
-          <p class="test-quote">Sphere's escrow gave my export buyers confidence to pay upfront. Our order volume doubled in four months.</p>
-          <div class="test-person">
-            <div class="avatar" style="background:linear-gradient(135deg,#d4a017,#b8860b);">AO</div>
-            <div><b>Amara Okafor</b><span>Textiles exporter, Lagos</span></div>
-          </div>
-        </div>
-        <div class="test-card glass" data-reveal style="--i:1">
-          <p class="test-quote">The AI recommendations put our software listing in front of buyers we'd never have reached on our own.</p>
-          <div class="test-person">
-            <div class="avatar" style="background:linear-gradient(135deg,#f5d27a,#f5a623);">TM</div>
-            <div><b>Themba Mokoena</b><span>Founder, cloud tools studio, Johannesburg</span></div>
-          </div>
-        </div>
-        <div class="test-card glass" data-reveal style="--i:2">
-          <p class="test-quote">Pan-African logistics meant we could finally ship produce to three neighboring countries without three separate brokers.</p>
-          <div class="test-person">
-            <div class="avatar" style="background:linear-gradient(135deg,#b8860b,#134e4a);">NW</div>
-            <div><b>Naledi Wanjiru</b><span>Agri-exports lead, Nairobi</span></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+  <section id="pricing" class="section-space"><div class="wrap"><div class="section-head" data-reveal><div class="section-label">For sellers</div><h2 class="section-title">Start free. <span class="accent">Scale boldly.</span></h2><p class="section-desc">No setup fees. Choose the tools that match your next stage of growth.</p></div><div class="price-grid" data-stagger><div class="price-card glass" data-reveal style="--i:0"><div class="price-name">Starter</div><div class="price-amount">$0<span>/month</span></div><div class="price-desc">For sellers just getting listed.</div><ul class="price-list"><li>Up to 10 active listings</li><li>Standard escrow payments</li><li>Business messaging</li><li>Basic analytics</li></ul><a href="#start-selling" class="btn btn-ghost btn-block">Get started</a></div><div class="price-card glass featured" data-reveal style="--i:1"><div class="price-badge">Most popular</div><div class="price-name">Trade Sphere Pro</div><div class="price-amount">$19<span>/month</span></div><div class="price-desc">For sellers ready to scale.</div><ul class="price-list"><li>Unlimited listings</li><li>AI recommendations &amp; promoted listings</li><li>Advanced analytics dashboard</li><li>Priority pan-African logistics rates</li><li>Priority support</li></ul><a href="#start-selling" class="btn btn-gold btn-block">Upgrade to Pro</a></div></div></div></section>
 
-  <!-- TRUST BADGES -->
-  <section id="trust" style="padding-top:0;">
-    <div class="wrap">
-      <div class="trust-strip" data-stagger>
-        <div class="trust-badge glass" data-reveal style="--i:0">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 4 6v6c0 5 3.6 8 8 9 4.4-1 8-4 8-9V6l-8-3Z" stroke-linejoin="round"/><path d="m9 12 2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          Verified sellers
-        </div>
-        <div class="trust-badge glass" data-reveal style="--i:1">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="10" width="16" height="10" rx="1.5"/><path d="M8 10V7a4 4 0 0 1 8 0v3" stroke-linecap="round"/></svg>
-          Secure escrow
-        </div>
-        <div class="trust-badge glass" data-reveal style="--i:2">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12c0-1 3-9 10-9s10 8 10 9-3 9-10 9-10-8-10-9Z" stroke-linejoin="round"/><circle cx="12" cy="12" r="2.4"/></svg>
-          Pan-African logistics
-        </div>
-        <div class="trust-badge glass" data-reveal style="--i:3">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20V10M12 20V4M20 20v-7" stroke-linecap="round"/></svg>
-          Real-time analytics
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- PRICING -->
-  <section id="pricing">
-    <div class="wrap">
-      <div class="section-head" data-reveal>
-        <div class="section-label">Pricing</div>
-        <h2 class="section-title">Start free. Scale when ready.</h2>
-        <p class="section-desc">No setup fees. Cancel Trade Sphere Pro anytime.</p>
-      </div>
-
-      <div class="price-grid" data-stagger>
-        <div class="price-card glass" data-reveal style="--i:0">
-          <div class="price-name">Starter</div>
-          <div class="price-amount">$0<span>/month</span></div>
-          <div class="price-desc">For sellers just getting listed.</div>
-          <ul class="price-list">
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 4 4 10-10" stroke-linecap="round" stroke-linejoin="round"/></svg>Up to 10 active listings</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 4 4 10-10" stroke-linecap="round" stroke-linejoin="round"/></svg>Standard escrow payments</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 4 4 10-10" stroke-linecap="round" stroke-linejoin="round"/></svg>Business messaging</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 4 4 10-10" stroke-linecap="round" stroke-linejoin="round"/></svg>Basic analytics</li>
-          </ul>
-          <a href="#start-selling" class="btn btn-ghost btn-block">Get started</a>
-        </div>
-
-        <div class="price-card glass featured" data-reveal style="--i:1">
-          <div class="price-badge">Most popular</div>
-          <div class="price-name">Trade Sphere Pro</div>
-          <div class="price-amount">$19<span>/month</span></div>
-          <div class="price-desc">For sellers ready to scale.</div>
-          <ul class="price-list">
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 4 4 10-10" stroke-linecap="round" stroke-linejoin="round"/></svg>Unlimited listings</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 4 4 10-10" stroke-linecap="round" stroke-linejoin="round"/></svg>AI recommendations &amp; promoted listings</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 4 4 10-10" stroke-linecap="round" stroke-linejoin="round"/></svg>Advanced analytics dashboard</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 4 4 10-10" stroke-linecap="round" stroke-linejoin="round"/></svg>Priority pan-African logistics rates</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 4 4 10-10" stroke-linecap="round" stroke-linejoin="round"/></svg>Priority support</li>
-          </ul>
-          <a href="#start-selling" class="btn btn-gold btn-block">Upgrade to Pro</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- AFFILIATE TEASER -->
-  <section id="affiliate-teaser">
-    <div class="wrap">
-      <div class="cta-panel glass" data-reveal style="text-align:left; display:flex; align-items:center; gap:36px; flex-wrap:wrap;">
-        <div style="flex:1; min-width:260px;">
-          <div class="section-label">Affiliate program</div>
-          <h2 style="font-size:clamp(1.5rem,2.8vw,2rem); font-weight:800; letter-spacing:-0.02em; margin-top:8px;">Earn $1 for every seller you refer</h2>
-          <p style="margin-top:12px; color:var(--text-dim); max-width:480px;">Share your link. When someone signs up to sell through it, you earn — simple as that. Track clicks, signups, and your balance in real time.</p>
-        </div>
-        <a href="./affiliate.html" class="btn btn-gold" style="flex-shrink:0;">Get my referral link</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA BAND -->
-  <section class="cta-band" id="start-selling">
-    <div class="wrap">
-      <div class="cta-panel glass" data-reveal>
-        <h2>Your customers are already searching.</h2>
-        <p>Set up your storefront on Trade Sphere Marketplace in under ten minutes.</p>
-        <div class="hero-ctas">
-          <a href="#" class="btn btn-gold open-signup">Start Selling — it's free</a>
-          <a href="./affiliate.html" class="btn btn-ghost">Become an affiliate — earn $1/referral</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
+  <section id="affiliate-teaser" class="section-space compact"><div class="wrap"><div class="cta-panel glass split-panel" data-reveal><div><div class="section-label">Affiliate program</div><h2>Earn $1 for every seller you refer.</h2><p>Share your link, track your impact, and grow the network with us.</p></div><a href="./affiliate.html" class="btn btn-gold">Get my referral link</a></div></div></section>
+  <section class="cta-band" id="start-selling"><div class="wrap"><div class="cta-panel" data-reveal><div class="cta-orbit">✦</div><div class="section-label">Your next customer is here</div><h2>Bring your business<br><span class="accent">into the Sphere.</span></h2><p>Set up your storefront on Trade Sphere Marketplace in under ten minutes.</p><div class="hero-ctas"><a href="#" class="btn btn-gold open-signup">Start Selling — it’s free</a><a href="./affiliate.html" class="btn btn-ghost">Become an affiliate</a></div></div></div></section>
 </main>
 
-<footer id="advertise">
-  <div class="wrap">
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <a href="#top" class="logo">
-          <svg class="orbit" viewBox="0 0 28 28" aria-hidden="true">
-            <circle class="ring" cx="14" cy="14" r="10"/>
-            <circle class="dot" cx="14" cy="4" r="2.6"/>
-          </svg>
-          Trade Sphere Marketplace
-        </a>
-        <p>Africa's Trade Sphere Marketplace — connecting sellers, service providers, and investors across the continent.</p>
-      </div>
+<footer id="advertise"><div class="wrap"><div class="footer-grid"><div class="footer-brand"><a href="#top" class="logo"><img class="logo-mark" src="./assets/logo-small.png" alt=""> <span>Trade Sphere <b>Marketplace</b></span></a><p>Africa’s trade sphere — connecting sellers, service providers, and investors across the continent.</p></div><div class="footer-col"><h4>Marketplace</h4><ul><li><a href="#marketplace">Browse categories</a></li><li><a href="#start-selling">Start selling</a></li><li><a href="#pricing">Trade Sphere Pro</a></li><li><a href="#advertise">Advertise</a></li></ul></div><div class="footer-col"><h4>Company</h4><ul><li><a href="#">About Sphere</a></li><li><a href="#pricing">Invest</a></li><li><a href="#">Careers</a></li><li><a href="#">Press</a></li></ul></div><div class="footer-col"><h4>Trust &amp; support</h4><ul><li><a href="#">Help center</a></li><li><a href="#">Trust &amp; safety</a></li><li><a href="#">Seller guidelines</a></li><li><a href="#">Contact us</a></li></ul></div></div><div class="footer-bottom"><p>© 2026 Trade Sphere Marketplace. All rights reserved.</p><div class="footer-note">Made for African commerce <span>✦</span></div></div></div></footer>
 
-      <div class="footer-col">
-        <h4>Marketplace</h4>
-        <ul>
-          <li><a href="#marketplace">Browse categories</a></li>
-          <li><a href="#start-selling">Start selling</a></li>
-          <li><a href="#pricing">Trade Sphere Pro</a></li>
-          <li><a href="#advertise">Advertise</a></li>
-        </ul>
-      </div>
-
-      <div class="footer-col">
-        <h4>Company</h4>
-        <ul>
-          <li><a href="#">About Sphere</a></li>
-          <li><a href="#pricing">Invest</a></li>
-          <li><a href="#">Careers</a></li>
-          <li><a href="#">Press</a></li>
-        </ul>
-      </div>
-
-      <div class="footer-col">
-        <h4>Support</h4>
-        <ul>
-          <li><a href="#">Help center</a></li>
-          <li><a href="#">Trust &amp; safety</a></li>
-          <li><a href="#">Seller guidelines</a></li>
-          <li><a href="#">Contact us</a></li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="footer-bottom">
-      <p>© 2026 Trade Sphere Marketplace. All rights reserved.</p>
-      <div class="social-row">
-        <a href="#" class="social-icon" aria-label="X / Twitter"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.2 2h3.3l-7.2 8.2L23 22h-6.6l-5.2-6.8L5.2 22H1.9l7.7-8.8L1 2h6.8l4.7 6.2L18.2 2Zm-1.2 18h1.8L7.1 4H5.2l11.8 16Z"/></svg></a>
-        <a href="#" class="social-icon" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.05c.53-.95 1.83-1.95 3.77-1.95 4.03 0 4.78 2.5 4.78 5.75V21H18v-5.7c0-1.36-.02-3.1-1.9-3.1-1.9 0-2.2 1.48-2.2 3v5.8h-4V9Z"/></svg></a>
-        <a href="#" class="social-icon" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.2c2.7 0 3 0 4.1.06 1.1.05 1.8.22 2.2.37.55.21.95.47 1.37.89.42.42.68.82.89 1.37.15.4.32 1.1.37 2.2.06 1.1.06 1.4.06 4.1s0 3-.06 4.1c-.05 1.1-.22 1.8-.37 2.2-.21.55-.47.95-.89 1.37-.42.42-.82.68-1.37.89-.4.15-1.1.32-2.2.37-1.1.06-1.4.06-4.1.06s-3 0-4.1-.06c-1.1-.05-1.8-.22-2.2-.37a3.7 3.7 0 0 1-1.37-.89 3.7 3.7 0 0 1-.89-1.37c-.15-.4-.32-1.1-.37-2.2C2.2 15 2.2 14.7 2.2 12s0-3 .06-4.1c.05-1.1.22-1.8.37-2.2.21-.55.47-.95.89-1.37.42-.42.82-.68 1.37-.89.4-.15 1.1-.32 2.2-.37C8 2.2 8.3 2.2 12 2.2Zm0 3.3a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13Zm0 10.7a4.2 4.2 0 1 1 0-8.4 4.2 4.2 0 0 1 0 8.4Zm6.7-10.9a1.5 1.5 0 1 1-3.02 0 1.5 1.5 0 0 1 3.02 0Z"/></svg></a>
-      </div>
-    </div>
-  </div>
-</footer>
-
-<!-- Start Selling signup modal -->
-<div class="modal-overlay" id="signup-modal">
-  <div class="modal-box">
-    <button class="modal-close" id="modal-close" aria-label="Close">✕</button>
-    <div id="modal-form-view">
-      <h3>Start selling on Sphere</h3>
-      <p class="mhint">Create your seller account to list products or services.</p>
-      <form id="signup-form">
-        <div class="field">
-          <label for="su-name">Full name</label>
-          <input id="su-name" type="text" required placeholder="e.g. Amara Okafor" />
-        </div>
-        <div class="field">
-          <label for="su-email">Email</label>
-          <input id="su-email" type="email" required placeholder="you@business.com" />
-        </div>
-        <div class="modal-actions">
-          <button type="submit" class="btn btn-gold btn-block">Create seller account</button>
-        </div>
-      </form>
-    </div>
-    <div id="modal-success-view" class="modal-success" style="display:none;">
-      <div class="check">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 4 4 10-10" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </div>
-      <h3>You're in 🎉</h3>
-      <p class="mhint" id="modal-success-msg">Your seller account has been created.</p>
-      <button class="btn btn-ghost btn-block" id="modal-done">Done</button>
-    </div>
-  </div>
-</div>
-
+<div class="modal-overlay" id="signup-modal"><div class="modal-box"><button class="modal-close" id="modal-close" aria-label="Close">✕</button><div id="modal-form-view"><div class="modal-kicker">JOIN THE NETWORK</div><h3>Start selling on Sphere</h3><p class="mhint">Create your seller account to list products or services.</p><form id="signup-form"><div class="field"><label for="su-name">Full name</label><input id="su-name" type="text" required placeholder="e.g. Amara Okafor" /></div><div class="field"><label for="su-email">Email</label><input id="su-email" type="email" required placeholder="you@business.com" /></div><div class="modal-actions"><button type="submit" class="btn btn-gold btn-block">Create seller account</button></div></form></div><div id="modal-success-view" class="modal-success" style="display:none;"><div class="check">✓</div><h3>You’re in.</h3><p class="mhint" id="modal-success-msg">Your seller account has been created.</p><button class="btn btn-ghost btn-block" id="modal-done">Done</button></div></div></div>
 <div class="toast" id="toast"></div>
-
 <script src="./assets/app.js"></script>
 <script>
-  if (!SphereDB.isConfigured()) {
-    document.getElementById('config-banner').style.display = 'block';
-  }
-  // Capture ?ref=CODE on load (referral attribution)
-  SphereDB.captureReferralFromURL();
-
-  // Signup modal wiring
-  const signupModal = document.getElementById('signup-modal');
-  const openTriggers = document.querySelectorAll('#open-signup, #open-signup-mobile, .open-signup');
-  const modalClose = document.getElementById('modal-close');
-  const modalDone = document.getElementById('modal-done');
-  const formView = document.getElementById('modal-form-view');
-  const successView = document.getElementById('modal-success-view');
-  const signupForm = document.getElementById('signup-form');
-
-  function openModal(){
-    signupModal.classList.add('open');
-    formView.style.display = 'block';
-    successView.style.display = 'none';
-    signupForm.reset();
-  }
-  function closeModal(){ signupModal.classList.remove('open'); }
-
-  openTriggers.forEach(el => el.addEventListener('click', (e) => { e.preventDefault(); openModal(); }));
-  modalClose.addEventListener('click', closeModal);
-  modalDone.addEventListener('click', closeModal);
-  signupModal.addEventListener('click', (e) => { if (e.target === signupModal) closeModal(); });
-
-  signupForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const name = document.getElementById('su-name').value.trim();
-    const email = document.getElementById('su-email').value.trim();
-    const submitBtn = signupForm.querySelector('button[type=submit]');
-    submitBtn.disabled = true;
-    submitBtn.textContent = 'Creating account…';
-    try {
-      const result = await SphereDB.recordSignup(name, email);
-      formView.style.display = 'none';
-      successView.style.display = 'block';
-      document.getElementById('modal-success-msg').textContent = result.credited
-        ? `Your seller account has been created. Thanks to a referral link, $${SphereDB.REFERRAL_BOUNTY.toFixed(2)} was just credited to that affiliate.`
-        : 'Your seller account has been created.';
-    } catch (err) {
-      showToast('Something went wrong — please try again.');
-      console.error(err);
-    } finally {
-      submitBtn.disabled = false;
-      submitBtn.textContent = 'Create seller account';
-    }
-  });
-
-  function showToast(msg){
-    const t = document.getElementById('toast');
-    t.textContent = msg;
-    t.classList.add('show');
-    setTimeout(() => t.classList.remove('show'), 2600);
-  }
+if (!SphereDB.isConfigured()) document.getElementById('config-banner').style.display = 'block';
+SphereDB.captureReferralFromURL();
+const signupModal=document.getElementById('signup-modal'),openTriggers=document.querySelectorAll('#open-signup,#open-signup-mobile,.open-signup'),modalClose=document.getElementById('modal-close'),modalDone=document.getElementById('modal-done'),formView=document.getElementById('modal-form-view'),successView=document.getElementById('modal-success-view'),signupForm=document.getElementById('signup-form');
+function openModal(){signupModal.classList.add('open');formView.style.display='block';successView.style.display='none';signupForm.reset();} function closeModal(){signupModal.classList.remove('open');}
+openTriggers.forEach(el=>el.addEventListener('click',e=>{e.preventDefault();openModal();})); modalClose.addEventListener('click',closeModal); modalDone.addEventListener('click',closeModal); signupModal.addEventListener('click',e=>{if(e.target===signupModal)closeModal();});
+signupForm.addEventListener('submit',async e=>{e.preventDefault();const name=document.getElementById('su-name').value.trim(),email=document.getElementById('su-email').value.trim(),submitBtn=signupForm.querySelector('button[type=submit]');submitBtn.disabled=true;submitBtn.textContent='Creating account…';try{const result=await SphereDB.recordSignup(name,email);formView.style.display='none';successView.style.display='block';document.getElementById('modal-success-msg').textContent=result.credited?`Your seller account has been created. $${SphereDB.REFERRAL_BOUNTY.toFixed(2)} was credited to the referring affiliate.`:'Your seller account has been created.';}catch(err){showToast('Something went wrong — please try again.');console.error(err);}finally{submitBtn.disabled=false;submitBtn.textContent='Create seller account';}});
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2600);}
+const hamburger=document.getElementById('hamburger'),mobileMenu=document.getElementById('mobile-menu');hamburger.addEventListener('click',()=>{const open=mobileMenu.classList.toggle('open');hamburger.classList.toggle('open',open);hamburger.setAttribute('aria-expanded',open);});mobileMenu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{mobileMenu.classList.remove('open');hamburger.classList.remove('open');hamburger.setAttribute('aria-expanded',false);}));
+const searchToggle=document.getElementById('search-toggle'),mobileSearch=document.getElementById('mobile-search');if(searchToggle)searchToggle.addEventListener('click',()=>{const open=mobileSearch.classList.toggle('open');searchToggle.setAttribute('aria-expanded',open);if(open)mobileSearch.querySelector('input').focus();});
+const heroInput=document.getElementById('hero-search-input');document.querySelectorAll('[data-query]').forEach(btn=>btn.addEventListener('click',()=>{heroInput.value=btn.dataset.query;heroInput.focus();}));document.querySelectorAll('form[role=search]').forEach(form=>form.addEventListener('submit',()=>{const input=form.querySelector('input');if(input&&input.value.trim())showToast(`Searching the Sphere for “${input.value.trim()}”…`);}));
+const revealEls=document.querySelectorAll('[data-reveal]'),io=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('in-view');io.unobserve(entry.target);}}),{threshold:.12,rootMargin:'0px 0px -30px 0px'});revealEls.forEach(el=>io.observe(el));
 </script>
-<script>
-  // Mobile menu toggle
-  const hamburger = document.getElementById('hamburger');
-  const mobileMenu = document.getElementById('mobile-menu');
-  hamburger.addEventListener('click', () => {
-    const open = mobileMenu.classList.toggle('open');
-    hamburger.classList.toggle('open', open);
-    hamburger.setAttribute('aria-expanded', open);
-  });
-  mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-    mobileMenu.classList.remove('open');
-    hamburger.classList.remove('open');
-    hamburger.setAttribute('aria-expanded', false);
-  }));
-
-  // Mobile search toggle
-  const searchToggle = document.getElementById('search-toggle');
-  const mobileSearch = document.getElementById('mobile-search');
-  if (searchToggle) {
-    searchToggle.addEventListener('click', () => {
-      const open = mobileSearch.classList.toggle('open');
-      searchToggle.setAttribute('aria-expanded', open);
-      if (open) mobileSearch.querySelector('input').focus();
-    });
-  }
-
-  // Scroll reveal (fadeUp / stagger)
-  const revealEls = document.querySelectorAll('[data-reveal]');
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('in-view');
-        io.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
-  revealEls.forEach(el => io.observe(el));
-</script>
-</body>
-</html>
+</body></html>
