@@ -89,7 +89,7 @@
         const { error } = await supabase.auth.signUp({
           email,
           password,
-          options: { data: { full_name: name, role: 'seller' } },
+          options: { data: { full_name: name, role: 'seller' }, email_redirect_to: 'https://bugdata-commits.github.io/confirm.html' },
         });
         if (error) {
           showToast(error.message || 'Something went wrong — please try again.');
@@ -102,6 +102,7 @@
         document.getElementById('modal-success-msg').textContent = 'Your seller account has been created.';
         const doneBtn = document.getElementById('modal-done');
         if (doneBtn) doneBtn.focus();
+        setTimeout(() => { window.location.href = 'seller-dashboard.html'; }, 1200);
       } catch (err) {
         const msg = (err && err.message) ? err.message : 'Something went wrong — please try again.';
         showToast(msg);

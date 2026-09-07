@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Welcome to the Sphere — Trade Sphere Marketplace</title>
+<meta name="robots" content="noindex, nofollow" />
+<link rel="stylesheet" href="./assets/style.css" />
+</head>
+<body>
+<a class="skip-link" href="#top">Skip to main content</a>
+<div class="bg-field" aria-hidden="true"></div>
+<main id="top">
+  <section class="section-space">
+    <div class="wrap">
+      <div class="glass" style="border-radius:var(--radius);padding:34px 22px;text-align:center;max-width:520px;margin:0 auto;">
+        <div class="check" aria-hidden="true" style="width:54px;height:54px;display:grid;place-items:center;margin:0 auto 18px;border-radius:50%;background:rgba(129,199,167,.15);color:var(--green);font-size:28px;">✓</div>
+        <h1 style="font:800 28px/1.15 'Manrope';margin:0 0 10px;letter-spacing:-.04em;">You’re confirmed.</h1>
+        <p class="mhint" style="color:var(--muted);font-size:14px;margin:0 0 22px;">Welcome to the Sphere. Your seller account is active.</p>
+        <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+          <a class="btn btn-gold" href="./seller-dashboard.html">Open seller dashboard</a>
+          <a class="btn btn-ghost" href="./index.html">Browse marketplace</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+<script>
+(function(){
+  try {
+    const hash = new URLSearchParams(window.location.hash.replace('#',''));
+    const qs = new URLSearchParams(window.location.search);
+    const access_token = hash.get('access_token') || qs.get('access_token');
+    const refresh_token = hash.get('refresh_token') || qs.get('refresh_token');
+    if (access_token && refresh_token) {
+      localStorage.setItem('sphere_access_token', access_token);
+      localStorage.setItem('sphere_refresh_token', refresh_token);
+    }
+  } catch(e) { console.warn('confirm page token save failed', e); }
+})();
+</script>
+</body>
+</html>
