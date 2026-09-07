@@ -92,11 +92,11 @@
           options: { data: { full_name: name, role: 'seller' } },
         });
         if (error) {
-          showToast(error.message);
+          showToast(error.message || 'Something went wrong — please try again.');
           console.error(error);
           return;
         }
-        await SphereDB.recordSignup(name, email);
+        try { await SphereDB.recordSignup(name, email); } catch (e) { console.warn('recordSignup failed', e); }
         formView.style.display = 'none';
         successView.style.display = 'block';
         document.getElementById('modal-success-msg').textContent = 'Your seller account has been created.';
