@@ -4,7 +4,7 @@
 
   const SUPABASE_URL = 'https://eqvunpxereqqqgumotid.supabase.co';
   const SUPABASE_ANON_KEY = 'sb_publishable_pIKmOBGR-Jyyih5D6rHV5A_C7BxYpGU';
-  const STORAGE_KEY = 'sphere_session';
+  const STORAGE_KEY = 'sb-eqvunpxereqqqgumotid-auth-token';
 
   async function rest(path, opts = {}) {
     const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
@@ -87,8 +87,8 @@
         const chain = {
           eq: (col, val) => { q.path += `&${encodeURIComponent(col)}=eq.${encodeURIComponent(val)}`; return chain; },
           order: (col, opts = {}) => { const dir = opts.ascending !== false ? 'asc' : 'desc'; q.path += `&order=${encodeURIComponent(col)}.${dir}`; return chain; },
-          then: (resolve) => resolve(rest(q.path, { headers: q.headers, prefer: q.prefer })),
-          catch: () => chain,
+          then(resolve, reject) { return resolve(rest(q.path, { headers: q.headers, prefer: q.prefer })).catch?.(reject); },
+          catch(onCatch) { return this.then(null, onCatch); },
         };
         return chain;
       },

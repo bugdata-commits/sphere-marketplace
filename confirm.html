@@ -32,7 +32,11 @@
     const qs = new URLSearchParams(window.location.search);
     const access_token = hash.get('access_token') || qs.get('access_token');
     const refresh_token = hash.get('refresh_token') || qs.get('refresh_token');
-    if (access_token && refresh_token) {
+    const error = hash.get('error') || qs.get('error');
+    if (error) {
+      const q = document.querySelector('.mhint');
+      if (q) q.textContent = 'Confirmation link looks invalid or expired.';
+    } else if (access_token && refresh_token) {
       localStorage.setItem('sphere_access_token', access_token);
       localStorage.setItem('sphere_refresh_token', refresh_token);
     }

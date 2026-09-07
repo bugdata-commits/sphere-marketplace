@@ -9,14 +9,21 @@
   }
 
   async function init() {
-    const { data } = await supabase.auth.getSession();
-    me = data.session?.user;
+    try {
+      const { data } = await (typeof supabase !== 'undefined' ? supabase.auth.getSession() : Promise.resolve({ data: { session: null } }));
+      me = data?.session?.user;
+    } catch (e) {
+      console.error('Auth session error', e);
+      me = null;
+    }
 
     if (!me) {
       document.querySelector('#auth-gate').style.display = 'block';
+      document.querySelector('#dash-content').style.display = 'none';
       return;
     }
 
+    document.querySelector('#auth-gate').style.display = 'none';
     document.querySelector('#dash-content').style.display = 'block';
     document.querySelector('#dash-user').textContent = me.email;
 
