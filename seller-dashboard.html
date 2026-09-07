@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Seller Dashboard — Trade Sphere Marketplace</title>
+<link rel="stylesheet" href="assets/style.css" />
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+  .dash { padding: 40px 6vw; max-width: 900px; margin: 0 auto; }
+  .dash-header { display:flex; justify-content:space-between; align-items:center; margin-bottom: 30px;}
+  .listing-form { display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin-bottom: 40px; }
+  .listing-form input, .listing-form select, .listing-form textarea {
+    background: var(--bg-elevated); border:1px solid var(--border); color:var(--text);
+    padding:11px; border-radius:8px; font-family: inherit;
+  }
+  .listing-form textarea { grid-column: 1 / -1; min-height: 80px; }
+  .listing-form .full { grid-column: 1 / -1; }
+  table { width:100%; border-collapse: collapse; }
+  th, td { text-align:left; padding: 10px; border-bottom: 1px solid var(--border); font-size: 14px; }
+  .row-actions button { margin-right: 8px; background:none; border:1px solid var(--border); color:var(--text); padding:6px 10px; border-radius:6px; cursor:pointer; }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="index.html" style="font-weight:700;">Trade Sphere <span style="color:var(--teal)">Marketplace</span></a>
+  <div class="nav-actions">
+    <span id="dash-user" style="color:var(--text-dim); font-size:14px;"></span>
+    <a href="#" class="btn-ghost" id="signout-link">Sign out</a>
+  </div>
+</nav>
+
+<div class="dash">
+  <div id="auth-gate" class="empty-state" style="display:none;">
+    <p><strong>Sign in required.</strong></p>
+    <p>Please sign in from the homepage to access your seller dashboard.</p>
+    <a class="btn-primary" href="index.html">Back to homepage</a>
+  </div>
+
+  <div id="dash-content" style="display:none;">
+    <div class="dash-header">
+      <h1>Your listings</h1>
+    </div>
+
+    <form id="listing-form" class="listing-form">
+      <input name="title" placeholder="Listing title" required class="full" />
+      <select name="category_id" required></select>
+      <input name="price" type="number" step="0.01" placeholder="Price (USD)" />
+      <input name="location" placeholder="Location (city, country)" />
+      <input name="image_url" placeholder="Image URL" class="full" />
+      <textarea name="description" placeholder="Description"></textarea>
+      <button class="btn-primary full" type="submit">Publish listing</button>
+      <p class="form-feedback full" id="listing-feedback"></p>
+    </form>
+
+    <table>
+      <thead>
+        <tr><th>Title</th><th>Price</th><th>Status</th><th>Actions</th></tr>
+      </thead>
+      <tbody id="my-listings-body">
+        <tr><td colspan="4">Loading…</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script src="assets/supabase-client.js"></script>
+<script>
+let me = null;
+
+async function init() {
+  if (!isSupabaseConfigured) {
+    document.querySelector('.dash').innerHTML =
+      '<div class="empty-state">Backend not connected yet — add your Supabase URL and anon key in assets/supabase-client.js</div>';
+    return;
+  }
+
+  const { data } = await supabase.auth.getSession();
+  me = data.session?.user;
+
+  if (!me) {
+    document.querySelector('#auth-gate').style.display = 'block';
+    return;
+  }
+
+  document.querySelector('#dash-content').style.display = 'block';
+  document.querySelector('#dash-user').textContent = me.email;
+
+  await loadCategoryOptions();
+  await loadMyListings();
+
+  document.querySelector('#signout-link').onclick = async (e) => {
+    e.preventDefault();
+    await supabase.auth.signOut();
+    window.location.href = 'index.html';
+  };
+
+  document.querySelector('#listing-form').addEventListener('submit', createListing);
+}
+
+async function loadCategoryOptions() {
+  const { data, error } = await supabase.from('categories').select('*').order('sort_order');
+  if (error) return console.error(error);
+  const select = document.querySelector("select[name='category_id']");
+  select.innerHTML = data.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
+}
+
+async function loadMyListings() {
+  const body = document.querySelector('#my-listings-body');
+  const { data, error } = await supabase
+    .from('listings')
+    .select('*')
+    .eq('seller_id', me.id)
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    body.innerHTML = `<tr><td colspan="4">Couldn't load your listings.</td></tr>`;
+    return console.error(error);
+  }
+
+  if (!data.length) {
+    body.innerHTML = `<tr><td colspan="4">No listings yet — publish your first one above.</td></tr>`;
+    return;
+  }
+
+  body.innerHTML = data.map(l => `
+    <tr>
+      <td>${l.title}</td>
+      <td>${l.price ? '$' + Number(l.price).toLocaleString() : '—'}</td>
+      <td>${l.status}</td>
+      <td class="row-actions">
+        <button onclick="toggleSold('${l.id}', '${l.status}')">${l.status === 'sold' ? 'Mark active' : 'Mark sold'}</button>
+        <button onclick="deleteListing('${l.id}')">Delete</button>
+      </td>
+    </tr>
+  `).join('');
+}
+
+async function createListing(e) {
+  e.preventDefault();
+  const form = e.target;
+  const feedback = document.querySelector('#listing-feedback');
+
+  const payload = {
+    seller_id: me.id,
+    title: form.title.value,
+    category_id: form.category_id.value,
+    price: form.price.value || null,
+    location: form.location.value,
+    image_url: form.image_url.value,
+    description: form.description.value,
+    status: 'active',
+  };
+
+  const { error } = await supabase.from('listings').insert(payload);
+  if (error) {
+    feedback.textContent = error.message;
+    return;
+  }
+  feedback.textContent = '';
+  form.reset();
+  await loadMyListings();
+}
+
+async function toggleSold(id, currentStatus) {
+  const newStatus = currentStatus === 'sold' ? 'active' : 'sold';
+  await supabase.from('listings').update({ status: newStatus }).eq('id', id);
+  await loadMyListings();
+}
+
+async function deleteListing(id) {
+  if (!confirm('Delete this listing?')) return;
+  await supabase.from('listings').delete().eq('id', id);
+  await loadMyListings();
+}
+
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
