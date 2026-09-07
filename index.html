@@ -9,36 +9,34 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
-
 <nav class="nav">
-  <a href="#top" style="font-weight:700;">Trade Sphere <span style="color:var(--teal)">Marketplace</span></a>
+  <a href="#top" class="nav-logo">Trade Sphere <span>Marketplace</span></a>
   <div class="nav-links">
     <a href="#marketplace">Marketplace</a>
     <a href="#pricing">Invest</a>
     <a href="affiliate.html">Affiliates</a>
   </div>
   <div class="nav-actions">
-    <a href="#" data-nav="signin" onclick="document.querySelector('#signin-modal').classList.add('open')">Sign in</a>
-    <a href="#" class="btn-primary" data-nav="start-selling" onclick="document.querySelector('#signup-modal').classList.add('open')">Start Selling</a>
+    <a href="#" class="btn btn-ghost" data-nav="signin" onclick="document.querySelector('#signin-modal').classList.add('open')">Sign in</a>
+    <a href="#" class="btn btn-primary" data-nav="start-selling" onclick="document.querySelector('#signup-modal').classList.add('open')">Start Selling</a>
   </div>
 </nav>
 
 <section class="hero" id="top">
-  <p class="eyebrow">Africa's trusted trade network</p>
-  <h1>Find what moves Africa forward.</h1>
-  <p class="lead">One premium marketplace for products, services, and opportunities — backed by verified sellers and secure trade.</p>
-
-  <div class="search-bar glass">
-    <select id="category-filter">
-      <option value="">All categories</option>
-    </select>
-    <input id="search-input" type="text" placeholder="Search products, services, businesses…" />
+  <div class="hero-inner">
+    <div class="eyebrow">Africa's trusted trade network</div>
+    <h1>Find what moves Africa forward.</h1>
+    <p class="lead">One premium marketplace for products, services, and opportunities — backed by verified sellers and secure trade.</p>
+    <div class="search-bar glass">
+      <select id="category-filter"><option value="">All categories</option></select>
+      <input id="search-input" type="text" placeholder="Search products, services, businesses…" />
+    </div>
   </div>
 </section>
 
 <section class="section" id="marketplace">
   <div class="section-head">
-    <p class="eyebrow">Trending now</p>
+    <div class="eyebrow">Trending now</div>
     <h2>What Africa is buying.</h2>
   </div>
   <div id="listings-grid" class="listings-grid">
@@ -48,20 +46,21 @@
 
 <section class="section" id="pricing">
   <div class="section-head">
-    <p class="eyebrow">For sellers</p>
+    <div class="eyebrow">For sellers</div>
     <h2>Start free. Scale boldly.</h2>
   </div>
-  <p>No setup fees. Sign up to list up to 10 items free, or upgrade to Trade Sphere Pro for unlimited listings and priority placement.</p>
-  <a class="btn-primary" href="#" onclick="document.querySelector('#signup-modal').classList.add('open')">Get started</a>
+  <p class="lead">No setup fees. Sign up to list up to 10 items free, or upgrade to Trade Sphere Pro for unlimited listings and priority placement.</p>
+  <a class="btn btn-primary" href="#" onclick="document.querySelector('#signup-modal').classList.add('open')">Get started</a>
+  <a class="btn btn-ghost" href="affiliate.html">Earn as an affiliate</a>
 </section>
 
 <section class="section" id="advertise">
   <div class="section-head">
-    <p class="eyebrow">Affiliate program</p>
-    <h2>Earn $1 for every seller you refer.</h2>
+    <div class="eyebrow">Affiliate program</div>
+    <h2>Earn while you grow the network.</h2>
   </div>
-  <p>Share your link, track your impact, and grow the network with us.</p>
-  <a class="btn-primary" href="affiliate.html">Get my referral link</a>
+  <p class="lead">Share your link, track your impact, and get rewarded for real seller referrals.</p>
+  <a class="btn btn-gold" href="affiliate.html">Get my referral link</a>
 </section>
 
 <footer>
@@ -69,7 +68,6 @@
   <p>© 2026 Trade Sphere Marketplace. All rights reserved.</p>
 </footer>
 
-<!-- Sign up modal -->
 <div class="modal-overlay" id="signup-modal">
   <div class="modal">
     <button class="modal-close" onclick="document.querySelector('#signup-modal').classList.remove('open')">✕</button>
@@ -85,18 +83,17 @@
           <option value="buyer">I want to buy</option>
         </select>
         <p class="form-feedback" id="signup-feedback"></p>
-        <button class="btn-primary" type="submit">Create account</button>
+        <button class="btn btn-primary" type="submit">Create account</button>
       </form>
     </div>
     <div id="signup-step-success" class="hidden">
       <h2>You're in.</h2>
       <p>Check your email to confirm your account, then sign in to start listing.</p>
-      <button class="btn-primary" onclick="document.querySelector('#signup-modal').classList.remove('open')">Done</button>
+      <button class="btn btn-primary" onclick="document.querySelector('#signup-modal').classList.remove('open')">Done</button>
     </div>
   </div>
 </div>
 
-<!-- Sign in modal -->
 <div class="modal-overlay" id="signin-modal">
   <div class="modal">
     <button class="modal-close" onclick="document.querySelector('#signin-modal').classList.remove('open')">✕</button>
@@ -105,7 +102,7 @@
       <input name="email" type="email" placeholder="Email" required />
       <input name="password" type="password" placeholder="Password" required />
       <p class="form-feedback" id="signin-feedback"></p>
-      <button class="btn-primary" type="submit">Sign in</button>
+      <button class="btn btn-primary" type="submit">Sign in</button>
     </form>
   </div>
 </div>

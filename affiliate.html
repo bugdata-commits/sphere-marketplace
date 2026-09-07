@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Affiliate Program — Trade Sphere Marketplace</title>
+  <meta name="description" content="Earn rewards by referring sellers to Trade Sphere Marketplace." />
+  <link rel="stylesheet" href="assets/style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+  <nav class="nav">
+    <a href="index.html" class="nav-logo">Trade Sphere <span>Marketplace</span></a>
+    <div class="nav-links">
+      <a href="index.html#marketplace">Marketplace</a>
+      <a href="index.html#pricing">Sell</a>
+      <a href="index.html">Home</a>
+    </div>
+    <div class="nav-actions">
+      <a href="index.html" class="btn btn-ghost">Home</a>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="eyebrow">Partner program</div>
+      <h1>Share Sphere. Earn rewards.</h1>
+      <p class="lead">Refer sellers, track performance, and earn when they list and grow.</p>
+      <div class="search-bar">
+        <button id="affiliate-action" class="btn btn-gold" style="border:none;">Get my referral link</button>
+      </div>
+      <p id="affiliate-status" style="color: var(--text-dim); font-size: 14px; margin-top: 14px; min-height: 18px;"></p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-head">
+      <div class="eyebrow">How it works</div>
+      <h2>Built for partners, not gatekeepers.</h2>
+    </div>
+    <div class="listings-grid">
+      <article class="listing-card" style="padding:18px;">
+        <div class="listing-body">
+          <h3 style="margin-top:0;">1. Share</h3>
+          <p class="listing-seller">Send your unique link to sellers, creators, and business owners.</p>
+        </div>
+      </article>
+      <article class="listing-card" style="padding:18px;">
+        <div class="listing-body">
+          <h3 style="margin-top:0;">2. Refer</h3>
+          <p class="listing-seller">When someone signs up through your link, it’s tracked automatically.</p>
+        </div>
+      </article>
+      <article class="listing-card" style="padding:18px;">
+        <div class="listing-body">
+          <h3 style="margin-top:0;">3. Earn</h3>
+          <p class="listing-seller">Get credited for qualifying referrals and scale your influence.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <footer>
+    <p>Trade Sphere Marketplace — connecting sellers, service providers, and investors across Africa.</p>
+    <p>© 2026 Trade Sphere Marketplace. All rights reserved.</p>
+  </footer>
+
+  <script src="assets/supabase-client.js"></script>
+  <script src="assets/app.js"></script>
+  <script>
+    const actionBtn = document.getElementById('affiliate-action');
+    const status = document.getElementById('affiliate-status');
+    async function refreshAffiliateStatus() {
+      const user = (await supabase.auth.getSession()).data.session?.user;
+      if (!user) {
+        status.textContent = 'Sign in to generate your referral link.';
+        actionBtn.textContent = 'Get my referral link';
+        actionBtn.onclick = () => document.querySelector('#signin-modal').classList.add('open');
+        return;
+      }
+      const link = await getMyReferralLink();
+      status.textContent = link ? `Your link: ${link}` : 'Could not load link yet.';
+      actionBtn.textContent = 'Copy link';
+      actionBtn.onclick = async () => {
+        if (!link) return;
+        await navigator.clipboard.writeText(link).catch(() => {});
+        status.textContent = 'Copied: ' + link;
+      };
+    }
+    refreshAffiliateStatus();
+  </script>
+</body>
+</html>
