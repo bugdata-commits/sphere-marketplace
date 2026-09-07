@@ -205,7 +205,7 @@ async function loadCategories() {
 
 // ---------- Listings ---------------------------------------------
 async function loadListings() {
-  const grid = document.querySelector('#listings-grid');
+  const grid = document.querySelector('#listings-grid, #live-listings');
   if (!grid) return;
   const { data, error } = await supabase
     .from('listings')
@@ -222,7 +222,7 @@ async function loadListings() {
 }
 
 function renderListings(listings) {
-  const grid = document.querySelector('#listings-grid');
+  const grid = document.querySelector('#listings-grid, #live-listings');
   if (!grid) return;
   if (!listings.length) {
     grid.innerHTML = `
