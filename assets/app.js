@@ -237,21 +237,40 @@ function renderListings(listings) {
     .map((l) => {
       const sellerName = l.profiles?.business_name || l.profiles?.full_name || 'Seller';
       const verified = l.profiles?.verified ? `<span class="badge-verified">✓ Verified</span>` : '';
-      const image = l.image_url || 'assets/placeholder-listing.png';
       const price = l.price ? `${l.currency || '$'} ${Number(l.price).toLocaleString()}` : 'Contact for price';
-      return `
-        <article class="listing-card">
-          <div class="listing-image" style="background-image:url('${escapeHtml(image)}')"></div>
-          <div class="listing-body">
-            <div class="listing-rating">★ ${l.rating || 'New'} ${l.review_count ? `(${l.review_count})` : ''}</div>
-            <h3>${escapeHtml(l.title)}</h3>
-            <p class="listing-seller">${escapeHtml(sellerName)} ${verified}</p>
-            <p class="listing-price">${escapeHtml(price)}</p>
-            <p class="listing-location">${escapeHtml(l.location || '')}</p>
-          </div>
-        </article>`;
+      const article = document.createElement('article');
+      article.className = 'listing-card';
+      const imageDiv = document.createElement('div');
+      imageDiv.className = 'listing-image';
+      // Set via the CSSOM (not string interpolation) so an untrusted image_url
+      // can never break out of a quoted attribute or inject extra CSS/HTML.
+      imageDiv.style.backgroundImage = `url(${CSS.escape(sanitizeImageUrl(l.image_url))})`;
+      article.appendChild(imageDiv);
+      const body = document.createElement('div');
+      body.className = 'listing-body';
+      body.innerHTML = `
+        <div class="listing-rating">★ ${escapeHtml(String(l.rating || 'New'))} ${l.review_count ? `(${escapeHtml(String(l.review_count))})` : ''}</div>
+        <h3>${escapeHtml(l.title)}</h3>
+        <p class="listing-seller">${escapeHtml(sellerName)} ${verified}</p>
+        <p class="listing-price">${escapeHtml(price)}</p>
+        <p class="listing-location">${escapeHtml(l.location || '')}</p>`;
+      article.appendChild(body);
+      return article.outerHTML;
     })
     .join('');
+}
+
+// Only allow http(s) image URLs (blocks javascript:/data:/vbscript: payloads);
+// falls back to a same-origin placeholder for anything else or a missing value.
+function sanitizeImageUrl(url) {
+  const fallback = 'assets/placeholder-listing.png';
+  if (!url) return fallback;
+  try {
+    const parsed = new URL(url, window.location.href);
+    return parsed.protocol === 'http:' || parsed.protocol === 'https:' ? parsed.href : fallback;
+  } catch {
+    return fallback;
+  }
 }
 
 function escapeHtml(str) {
@@ -356,7 +375,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (!window.__supabaseConfigured && typeof isSupabaseConfigured !== 'undefined' && !isSupabaseConfigured) {
     const banner = document.createElement('div');
     banner.className = 'config-banner';
-    banner.textContent = 'Backend not connected yet — add your Supabase URL and anon key in assets/supabase-client.js';
+    banner.textContent = 'Backend not connected yet — add your Supabase URL and anon key in assets/app.js';
     document.body.prepend(banner);
     return;
   }
