@@ -103,7 +103,8 @@
         const doneBtn = document.getElementById('modal-done');
         if (doneBtn) doneBtn.focus();
       } catch (err) {
-        showToast('Something went wrong — please try again.');
+        const msg = (err && err.message) ? err.message : 'Something went wrong — please try again.';
+        showToast(msg);
         console.error(err);
       } finally {
         submitBtn.disabled = false;
