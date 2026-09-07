@@ -221,4 +221,65 @@
   }
 
   if (window.SphereDB) SphereDB.captureReferralFromURL();
+
+  async function authInit() {
+    let direct = window.SupabaseDirectAuth || null;
+    try {
+      if (!direct) {
+        const mod = await import('./auth-rest.js');
+        direct = mod.SupabaseDirectAuth;
+      }
+    } catch (e) {
+      console.warn('Direct auth fallback unavailable', e);
+    }
+    if (typeof direct === 'undefined') return;
+    const signupForm = document.getElementById('signup-form');
+    const signinForm = document.getElementById('signin-form');
+    if (signupForm) {
+      signupForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const name = document.getElementById('su-name').value.trim();
+        const email = document.getElementById('su-email').value.trim();
+        const password = document.getElementById('su-password').value;
+        const submitBtn = signupForm.querySelector('button[type=submit]');
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Creating account…';
+        try {
+          await direct.signUp(email, password, name);
+          formView.style.display = 'none';
+          successView.style.display = 'block';
+          document.getElementById('modal-success-msg').textContent = 'Your seller account has been created.';
+          const doneBtn = document.getElementById('modal-done');
+          if (doneBtn) doneBtn.focus();
+        } catch (err) {
+          showToast(err.message || 'Something went wrong — please try again.');
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Create seller account';
+        }
+      });
+    }
+    if (signinForm) {
+      signinForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('si-email').value.trim();
+        const password = document.getElementById('si-password').value;
+        const feedback = document.getElementById('signin-feedback');
+        const submitBtn = signinForm.querySelector('button[type=submit]');
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Signing in…';
+        try {
+          await direct.signIn(email, password);
+          window.location.href = 'seller-dashboard.html';
+        } catch (err) {
+          feedback.textContent = err.message || 'Something went wrong.';
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Sign in';
+        }
+      });
+    }
+  }
+  authInit();
 })();
+
