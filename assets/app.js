@@ -301,48 +301,7 @@ function wireSearch() {
   categorySelect?.addEventListener('change', applyFilters);
 }
 
-// ---------- Auth: signup / signin ----------------------------------
-async function wireAuthForms() {
-  const signupForm = document.querySelector('#signup-form');
-  if (signupForm) {
-    signupForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const fullName = signupForm.querySelector("[name='full_name']").value;
-      const email = signupForm.querySelector("[name='email']").value;
-      const password = signupForm.querySelector("[name='password']").value;
-      const role = signupForm.querySelector("[name='role']")?.value || 'seller';
-      const { error } = await supabase.auth.signUp({
-        email,
-        password,
-        options: { data: { full_name: fullName, role } },
-      });
-      const feedback = document.querySelector('#signup-feedback');
-      if (error) {
-        if (feedback) feedback.textContent = error.message;
-        return;
-      }
-      await SphereDB.recordSignup(fullName, email);
-      document.querySelector('#signup-step-form')?.classList.add('hidden');
-      document.querySelector('#signup-step-success')?.classList.remove('hidden');
-    });
-  }
 
-  const signinForm = document.querySelector('#signin-form');
-  if (signinForm) {
-    signinForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const email = signinForm.querySelector("[name='email']").value;
-      const password = signinForm.querySelector("[name='password']").value;
-      const { error } = await supabase.auth.signInWithPassword({ email, password });
-      const feedback = document.querySelector('#signin-feedback');
-      if (error) {
-        if (feedback) feedback.textContent = error.message;
-        return;
-      }
-      window.location.href = 'seller-dashboard.html';
-    });
-  }
-}
 
 // ---------- Affiliate referral tracking ------------------------------
 function handleReferralParam() {
