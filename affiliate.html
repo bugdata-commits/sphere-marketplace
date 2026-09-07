@@ -71,11 +71,12 @@
     const actionBtn = document.getElementById('affiliate-action');
     const status = document.getElementById('affiliate-status');
     async function refreshAffiliateStatus() {
-      const user = (await supabase.auth.getSession()).data.session?.user;
+      const session = (await supabase.auth.getSession()).data.session;
+      const user = session?.user;
       if (!user) {
         status.textContent = 'Sign in to generate your referral link.';
         actionBtn.textContent = 'Get my referral link';
-        actionBtn.onclick = () => document.querySelector('#signin-modal').classList.add('open');
+        actionBtn.onclick = () => document.getElementById('signin-modal').classList.add('open');
         return;
       }
       const link = await getMyReferralLink();
